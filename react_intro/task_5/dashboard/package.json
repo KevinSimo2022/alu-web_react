@@ -12,7 +12,7 @@
     "react-scripts": "5.0.1",
     "web-vitals": "^2.1.4"
   },
-  "homepage": "https://izzeddin62.github.io/alu-web_react",
+  "homepage": "https:KevinSimo2022.github.io/alu-web_react",
   "scripts": {
     "build": "webpack build --config ./config/webpack.config.js",
     "start": "webpack-dev-server --mode development --config config/webpack.config.js",
