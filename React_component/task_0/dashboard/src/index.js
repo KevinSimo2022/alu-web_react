@@ -1,25 +1,25 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
 import App from './App/App';
-import { Notifications } from './Notifications/Notifications';
+import ReactDOM from 'react-dom';
 
-const rootId = document.getElementById("root");
-// isLoggedIn={true}
+const rootElement = document.getElementById("root");
+
 ReactDOM.render(
-  <>
-      <App />
-    </>,
-    rootId
+  <React.StrictMode>
+    <App />
+  </React.StrictMode>,
+  rootElement
 );
 
+// Hot Module Replacement (HMR) setup
 if (module.hot && process.env.NODE_ENV === "development") {
-  module.hot.accept("./App", () => {
-    const NextApp = require("./App").default;
+  module.hot.accept("./App/App", () => {
+    const NextApp = require("./App/App").default;
     ReactDOM.render(
       <React.StrictMode>
-        <App />
+        <NextApp />
       </React.StrictMode>,
-      rootId
+      rootElement
     );
   });
 }

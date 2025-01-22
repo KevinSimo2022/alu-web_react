@@ -15,7 +15,7 @@
   "scripts": {
     "build": "webpack --config ./config/webpack.config.js",
     "start-dev": "webpack serve -c ./config/webpack.config.js --open",
-    "start": "webpack serve -c ./config/webpack.config.js --open",
+    "start": "react-scripts start",
     "test": "jest",
     "dev": "npm run start-dev -- --env mode=development",
     "prod": "npm run start-dev -- --env mode=production"
@@ -51,5 +51,17 @@
     "prop-types": "^15.7.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
+  },
+  "browserslist": {
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   }
 }
