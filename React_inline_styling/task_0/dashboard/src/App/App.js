@@ -54,3 +54,19 @@ class App extends React.Component {
               {isLoggedIn ? <CourseList listCourses={listCourses} /> : <Login />}
             </BodySectionWithMarginBottom>
           </Suspense>
+          <BodySection title="News from the School">
+            <p>Graduation date is January 28th!</p>
+          </BodySection>
+          <Footer />
+        </div>
+      </>
+    );
+  }
+}
+
+App.propTypes = {
+  isLoggedIn: PropTypes.bool,
+  logOut: PropTypes.func.isRequired,
+};
+
+export default hot(module)(App);
