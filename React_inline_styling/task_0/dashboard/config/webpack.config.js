@@ -1,20 +1,21 @@
 const path = require('path');
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 
 module.exports = ({ mode } = { mode: "production" }) => {
   console.log(`mode is: ${mode}`);
 
   return {
-    mode: "production",
+    mode, // Dynamically set the mode
     entry: './src/index.js',
     output: {
-      path: path.resolve(__dirname, '../dist'),
-      filename: 'bundle.js'
+      path: path.resolve(__dirname, 'dist'), // Ensure path resolves correctly
+      filename: 'bundle.js',
     },
     devServer: {
       static: {
-        directory: path.join(__dirname, '../dist')
+        directory: path.join(__dirname, 'dist'), // Consistent relative path
       },
       port: 8564,
       hot: true,
@@ -27,36 +28,45 @@ module.exports = ({ mode } = { mode: "production" }) => {
           test: /\.(js|jsx)$/,
           exclude: /node_modules/,
           use: {
-            loader: "babel-loader"
-          }
+            loader: "babel-loader",
+            options: {
+              presets: [
+                "@babel/preset-env",
+                "@babel/preset-react",
+              ],
+            },
+          },
         },
         {
           test: /\.css$/i,
-          use: ['style-loader', 'css-loader'],
+          use: ["style-loader", "css-loader"],
         },
         {
           test: /\.(gif|png|jpe?g|svg)$/i,
           use: [
-            'file-loader',
+            "file-loader",
             {
-              loader: 'image-webpack-loader',
+              loader: "image-webpack-loader",
               options: {
-                bypassOnDebug: true, // webpack@1.x
-                disable: true, // webpack@2.x and newer
+                disable: mode === "development", // Optimize images only in production
               },
             },
           ],
-        }
+        },
       ],
     },
     plugins: [
       new HtmlWebpackPlugin({
-        template: "./public/index.html"
+        template: "./public/index.html",
       }),
-      new webpack.HotModuleReplacementPlugin()
+      new webpack.HotModuleReplacementPlugin(),
+      new BundleAnalyzerPlugin(),
     ],
     optimization: {
-      minimize: true, // Ensure minification of the bundle
-    }
-  }
+      minimize: mode === "production",
+      splitChunks: {
+        chunks: 'all',
+      },
+    },
+  };
 };
