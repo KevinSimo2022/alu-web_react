@@ -3,14 +3,14 @@ const HtmlWebpackPlugin = require("html-webpack-plugin");
 const webpack = require("webpack");
 
 module.exports = ({ mode } = { mode: "production" }) => {
-  console.log(`mode is: ${ mode }`);
+  console.log(`mode is: ${mode}`);
 
   return {
     mode: "production",
     entry: './src/index.js',
     output: {
-        path: path.resolve(__dirname, '../dist'),
-        filename: 'bundle.js'
+      path: path.resolve(__dirname, '../dist'),
+      filename: 'bundle.js'
     },
     devServer: {
       static: {
@@ -22,38 +22,41 @@ module.exports = ({ mode } = { mode: "production" }) => {
       compress: true,
     },
     module: {
-        rules: [
+      rules: [
+        {
+          test: /\.(js|jsx)$/,
+          exclude: /node_modules/,
+          use: {
+            loader: "babel-loader"
+          }
+        },
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.(gif|png|jpe?g|svg)$/i,
+          use: [
+            'file-loader',
             {
-              test: /\.(js|jsx)$/,
-              exclude: /node_modules/,
-              use: {
-                loader: "babel-loader"
-              }
+              loader: 'image-webpack-loader',
+              options: {
+                bypassOnDebug: true, // webpack@1.x
+                disable: true, // webpack@2.x and newer
+              },
             },
-            {
-                test: /\.css$/i,
-                use: ['style-loader', 'css-loader'],
-            },
-            {
-                test: /\.(gif|png|jpe?g|svg)$/i,
-                use: [
-                  'file-loader',
-                  {
-                    loader: 'image-webpack-loader',
-                    options: {
-                      bypassOnDebug: true, // webpack@1.x
-                      disable: true, // webpack@2.x and newer
-                    },
-                  },
-                ],
-            }
-        ],
+          ],
+        }
+      ],
     },
     plugins: [
       new HtmlWebpackPlugin({
         template: "./public/index.html"
       }),
       new webpack.HotModuleReplacementPlugin()
-    ]
+    ],
+    optimization: {
+      minimize: true, // Ensure minification of the bundle
+    }
   }
 };
