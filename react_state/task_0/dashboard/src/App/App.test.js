@@ -19,28 +19,32 @@ describe('<App />', () => {
   });
 
   it('verifies that the default state for displayDrawer is false', () => {
-    const wrapper = mount(<App />);
+    const wrapper = shallow(<App />);
     expect(wrapper.state('displayDrawer')).toBe(false);
   });
 
   it('verifies that handleDisplayDrawer updates displayDrawer to true', () => {
     const wrapper = mount(<App />);
-    const instance = wrapper.instance();
+    const instance = wrapper.instance(); // Get the instance of App component
 
-    instance.setState({ displayDrawer: false }); // Ensure it's false initially
+    instance.setState({ displayDrawer: false }); // Set initial state to false
     instance.handleDisplayDrawer(); // Call the method directly
-    wrapper.update();
-    expect(wrapper.instance().state.displayDrawer).toBe(true);
+    wrapper.update(); // Update the component to reflect state change
+
+    // Verify that state was updated
+    expect(wrapper.state('displayDrawer')).toBe(true);
   });
 
   it('verifies that handleHideDrawer updates displayDrawer to false', () => {
     const wrapper = mount(<App />);
-    const instance = wrapper.instance();
+    const instance = wrapper.instance(); // Get the instance of App component
 
-    instance.setState({ displayDrawer: true }); // Ensure it's true first
+    instance.setState({ displayDrawer: true }); // Set initial state to true
     instance.handleHideDrawer(); // Call the method directly
-    wrapper.update();
-    expect(wrapper.instance().state.displayDrawer).toBe(false);
+    wrapper.update(); // Update the component to reflect state change
+
+    // Verify that state was updated
+    expect(wrapper.state('displayDrawer')).toBe(false);
   });
 
   it('renders an <App /> component checking for <Notifications />', () => {
@@ -93,14 +97,8 @@ describe('<App />', () => {
     const wrapper = shallow(<App {...props} />);
     events.keydown({ ctrlKey: true, key: 'h' });
 
-    expect(window.alert).toHaveBeenCalledWith("Logging you out");
+    expect(window.alert).toHaveBeenCalledWith('Logging you out');
     expect(props.logOut).toHaveBeenCalled();
-    window.alert.mockRestore();
-  });
-
-  afterEach(() => {
-    // Restore global mocks if needed
-    window.addEventListener.mockRestore();
     window.alert.mockRestore();
   });
 });
