@@ -8,6 +8,7 @@ import Notifications from '../Notifications/Notifications';
 import CourseList from '../CourseList/CourseList';
 import { StyleSheetTestUtils } from 'aphrodite';
 
+
 beforeEach(() => {
     StyleSheetTestUtils.suppressStyleInjection();
 });
@@ -28,7 +29,7 @@ describe('<App />', () => {
         const instance = wrapper.instance();
 
         instance.setState({ displayDrawer: false }); // Ensure it's false initially
-        instance.handleDisplayDrawer();
+        instance.handleDisplayDrawer(); // Call the method directly
         wrapper.update();
         expect(wrapper.instance().state.displayDrawer).toBe(true);
     });
@@ -38,7 +39,7 @@ describe('<App />', () => {
         const instance = wrapper.instance();
 
         instance.setState({ displayDrawer: true }); // Ensure it's true first
-        instance.handleHideDrawer();
+        instance.handleHideDrawer(); // Call the method directly
         wrapper.update();
         expect(wrapper.instance().state.displayDrawer).toBe(false);
     });

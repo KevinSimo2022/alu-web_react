@@ -4,6 +4,7 @@
   "description": "task 5 of 0x02-react intro",
   "main": "./src/index.js",
   "jest": {
+    "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "<rootDir>/config/setupTests.js"
     ],
