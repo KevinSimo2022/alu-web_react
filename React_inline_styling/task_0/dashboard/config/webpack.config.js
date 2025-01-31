@@ -10,9 +10,9 @@ module.exports = ({ mode } = { mode: "production" }) => {
     mode, // Dynamically set the mode
     entry: './src/index.js',
     output: {
-      path: path.resolve(__dirname, 'dist'), // Ensure path resolves correctly
-      filename: 'bundle.js',
-    },
+  path: path.resolve(__dirname, 'dist'),
+  filename: '[name].[contenthash].js', // Use contenthash for unique filenames
+},
     devServer: {
       static: {
         directory: path.join(__dirname, 'dist'), // Consistent relative path
@@ -63,10 +63,17 @@ module.exports = ({ mode } = { mode: "production" }) => {
       new BundleAnalyzerPlugin(),
     ],
     optimization: {
-      minimize: mode === "production",
-      splitChunks: {
+  minimize: mode === "production",
+  splitChunks: {
+    chunks: 'all', // Split all chunks
+    cacheGroups: {
+      vendor: {
+        test: /[\\/]node_modules[\\/]/,
+        name: 'vendor', // Customize the vendor chunk name
         chunks: 'all',
       },
     },
+  },
+},
   };
 };
